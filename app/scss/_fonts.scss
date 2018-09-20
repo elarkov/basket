@@ -1,4 +1,4 @@
 @import "_mixins/font-face";
 
-@include font-face("roboto-example", "../fonts/RobotoRegular/RobotoRegular");
-@include font-face("roboto-example", "../fonts/RobotoBold/RobotoBold", bold);
+@include font-face("arialmt-example", "../fonts/ArialMtLight/ArialMtLight", 400);
+@include font-face("arialmt-example", "../fonts/ArialMtBold/ArialMtBold", bold);
