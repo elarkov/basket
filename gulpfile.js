@@ -50,7 +50,7 @@ gulp.task('rsync', function() {
 	.pipe(rsync({
 		root: 'app/',
 		hostname: 'username@yousite.com',
-		destination: 'yousite/public_html/',
+		destination: 'site/public_html/',
 		// include: ['*.htaccess'], // Includes files to deploy
 		exclude: ['**/Thumbs.db', '**/*.DS_Store'], // Excludes files from deploy
 		recursive: true,
