@@ -98,8 +98,8 @@ $(function() {
 		if(cartData !== null){
 			for(var items in cartData){
 				modalText.innerHTML += `${cartData[items][0]}<br>`;
-				modalCount.innerHTML = `на сумму: <span>${cartSum.innerHTML} руб.</span>`;
 			}
+			modalCount.innerHTML = `на сумму: <span>${cartSum.innerHTML} руб.</span>`;
 		}
 
 		span.addEventListener('click', function(){
