@@ -9,7 +9,8 @@ $(function() {
 			cartCircle = document.querySelector('.cart-circle'),
 			orderCartBtn = document.querySelector('.btn-cart'),
 			addP = document.querySelectorAll('.js-add-item');
-			cartCircleText = document.querySelector('.cart-circle__btn');
+			cartCircleText = document.querySelector('.cart-circle__btn'),
+			cartData = getCartData() || {};
 
 	function getCartData(){ //получить данные из localStorage
 		return JSON.parse(localStorage.getItem('cart'));
@@ -20,15 +21,8 @@ $(function() {
 		return false;
 	}
 
-	function addToCart(e){ //функция добавляет товар в корзину, при клике на кнопку "В корзину"
-		let cartData = getCartData() || {},
-		parentBox = this.parentNode.parentNode,
-		itemId = this.getAttribute('data-id'),
-		itemTitle = parentBox.querySelector('.product-list__title').innerHTML,
-		itemPrice = parentBox.querySelector('.product-list__digit').innerHTML;
-		cartData[itemId] = [itemTitle, itemPrice];
-		setCartData(cartData);
 
+	function makeListProduct(){ //функция отрисовывает данные добавленные в корзину
 		let totalItems = '';
 
 		if(cartData !== null){
@@ -52,6 +46,7 @@ $(function() {
 			cartCont.innerHTML = totalItems;
 			
 			let delBtn = document.querySelectorAll('.btn-del');
+
 			for(let i = 0; i < delBtn.length; i++){
 				delBtn[i].addEventListener('click', function(e){
 					if(e.target.className === 'btn-del'){
@@ -60,24 +55,36 @@ $(function() {
 						
 					let parent = delBtn[i].parentNode;
 					parent.classList.add('js-hide');
+
 					if(parent.classList.contains('js-hide')){
 						let def = parent.textContent;
 						let resDef = def.replace(/[^-0-9]/gim,'');
 						cartSum.innerHTML = Number(cartSum.innerHTML) - Number(resDef);
 					}
-					delete cartData[itemId];
-					setCartData(cartData);
-				}
+						delete cartData[itemId];
+						setCartData(cartData);
+					}
 				});
 			}
 		} else {
 			cartCont.innerHTML = 'В корзине пусто';
 		}
-		
-		return false;
 	}
 
-	function orderCart(){
+	makeListProduct();
+
+	function addToCart(e){ //функция добавляет товар в корзину, при клике на кнопку "В корзину"
+		parentBox = this.parentNode.parentNode,
+		itemId = this.getAttribute('data-id'),
+		itemTitle = parentBox.querySelector('.product-list__title').innerHTML,
+		itemPrice = parentBox.querySelector('.product-list__digit').innerHTML;
+		cartData[itemId] = [itemTitle, itemPrice];
+		setCartData(cartData);
+
+		makeListProduct();
+	}
+
+	function orderCart(){ //функция отображает добавленый товар в модальном окне
 
 		var modal = document.querySelector('#myModal');
 		var span = document.getElementsByClassName("modal__close")[0];
@@ -119,6 +126,7 @@ $(function() {
 		cartCont.innerHTML = 'Корзина очищена';
 		cartSum.innerHTML = 0;
 	});*/
+
 
 	//корзина прилипает к верху
 	window.addEventListener('scroll', doScroll, false);
